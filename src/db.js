@@ -12,7 +12,7 @@ connection.connect((err) => {
       console.error('Erro ao conectar: ' + err.stack);
       return;
     }
-    console.log('Conexão bem-sucedida com o Banco ' + connection.threadId);
+    console.log('Conexão bem-sucedida com o Banco ');
   });
 
   module.exports = connection
