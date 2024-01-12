@@ -54,28 +54,21 @@ module.exports = {
     },
 
     inserir: async (req, res) => {
-        let json = { error: '', result: {} };
-    
         try {
-            let modelo = req.params.modelo;
-            let placa = req.params.placa;
+            let modelo = req.body.modelo;
+            let placa = req.body.placa
     
-           
-            let carro = await CarroService.inserir(modelo,placa);
-            json.result = {
-                id: carro.id,
-                modelo: carro.modelo,
-                placa: carro.placa
+            if (!modelo || !placa) {
+                return res.status(400).json({ error: 'Modelo e placa são obrigatórios.' });
             }
     
-    
-        res.json(json);
-       
-    }catch (error) {
-            json.error = 'Erro ao Inserir carro';
-            console.error(error);
+            const novoId = await CarroService.inserirRegistro( modelo, placa );
+            res.json({ id: novoId, modelo, placa });
+        } catch (error) {
+            console.error('Erro ao inserir registro:', error);
+            res.status(500).json({ error: 'Erro interno do servidor.' });
         }
-    },
 
 
+}
 }

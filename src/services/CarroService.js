@@ -37,6 +37,19 @@ module.exports = {
         });
     },
 
-    
+    inserirRegistro: (modelo,placa) =>{
+  
+      return new Promise((resolve, reject) => {
+          const sql = 'INSERT INTO carros (modelo,placa) VALUES (?, ?)';
+          db.query(sql, [modelo,placa], (error, results) => {
+              if (error) {
+                  reject(error);
+                  
+              } else {
+                  resolve(results.insertId);
+              }
+          });
+      });
+  }
 };
       
