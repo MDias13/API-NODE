@@ -1,6 +1,8 @@
 const db = require('../db')
 
 
+
+
 module.exports = {
     
     buscarTodos: () => {
@@ -47,6 +49,19 @@ module.exports = {
                   
               } else {
                   resolve(results.insertId);
+              }
+          });
+      });
+    },
+    
+    atualizarRegistro: (id, novoModelo, novaPlaca) => {
+      return new Promise((resolve, reject) => {
+          const sql = 'UPDATE carros SET modelo = ?, placa = ? WHERE id = ?';
+          db.query(sql, [novoModelo, novaPlaca, id], (error, results) => {
+              if (error) {
+                  reject(error);
+              } else {
+                  resolve(results.affectedRows > 0);
               }
           });
       });

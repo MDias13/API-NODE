@@ -70,5 +70,28 @@ module.exports = {
         }
 
 
-}
+    },
+    atualizar: async (req, res) => {
+        try {
+            let  id  = req.params.id;
+            let  novoModelo = req.body.modelo;
+            let  novaPlaca  = req.body.placa;
+
+    
+            if (!novoModelo || !novaPlaca) {
+                return res.status(400).json({ error: 'Novo modelo e nova placa são obrigatórios.' });
+            }
+    
+            const sucesso = await CarroService.atualizarRegistro(id, novoModelo, novaPlaca);
+    
+            if (sucesso) {
+                res.json({ mensagem: 'Registro atualizado com sucesso.' });
+            } else {
+                res.status(404).json({ error: 'Registro não encontrado.' });
+            }
+        } catch (error) {
+            console.error('Erro ao atualizar registro:', error);
+            res.status(500).json({ error: 'Erro interno do servidor.' });
+        }
+    }
 }
